@@ -1,0 +1,62 @@
+%%PEAK AMPLITUDE
+    %Vessel Diameter (rr1a)
+       
+tstart=1;
+tstop=2;
+rr1a_percentmeansC=[];
+rr1a_percentmeans=[];
+rr1a_percentmeansSM=[];
+rr1a_percentsemC=[];
+rr1a_percentsem=[];
+rr1a_percentsemSM=[];
+     
+       %Capillary(StimCombined.m, stimAllTrials.mat)
+rr1a_percentmeans=nanmean(all_rr1a_percent(tt>=tstart&tt<tstop,:));
+rr1a_percentsem2=nanmean(all_rr1aSEM_percent(tt>=tstart&tt<tstop,:));
+rr1a_percentsem=nanstd(rr1a_percentmeans)/sqrt(size(rr1a_percentmeans,2));
+       
+    %Arteriole(StimCombinedSM.m, StimSM.mat)
+rr1a_percentmeansSM=nanmean(all_rr1a_percentSM(tt>=tstart&tt<tstop,:));
+rr1a_percentSEMSM=nanmean(all_rr1a_percentSM(tt>=tstart&tt<tstop,:));
+rr1a_percentsemSM=nanstd(rr1a_percentmeansSM)/sqrt(size(rr1a_percentmeansSM,2));
+
+    %Control(ControlCombined.m ControlAll.mat
+rr1a_percentmeansC=nanmean(all_rr1a_percentC(tt>=tstart&tt<tstop,:));
+rr1a_percentsemC=nanstd(rr1a_percentmeansC)/sqrt(size(rr1a_percentmeansC,2));
+
+%figure
+
+figure;
+bar([nanmean(rr1a_percentmeansC) nanmean(rr1a_percentmeans) nanmean(rr1a_percentmeansSM)])
+hold on
+errorbar([nanmean(rr1a_percentmeansC) nanmean(rr1a_percentmeans) nanmean(rr1a_percentmeansSM)],[rr1a_percentsemC rr1a_percentsem rr1a_percentsemSM], 'k.')
+
+scatter(ones(1,length(rr1a_percentmeansC)),rr1a_percentmeansC,'o')
+scatter(ones(1,length(rr1a_percentmeans)).*2,rr1a_percentmeans,'o')
+scatter(ones(1,length(rr1a_percentmeansSM)).*3,rr1a_percentmeansSM,'o')
+
+
+    %%  GCaMP (PEAK AMPLITUDE)
+        %Pericyte(StimCombined.m, stimAllTrials.mat)
+tstart=0.5;
+tstop=1.5;
+
+yproj2max_percentmeansSM=nanmean(all_yproj2max_percentSM(tt>=tstart&tt<tstop,:));
+yproj2max_percentsemSM=nanstd(yproj2max_percentmeansSM)/sqrt(size(yproj2max_percentmeansSM,2));
+
+    %SM(StimCombinedSM.m, StimSM.mat)
+yproj2max_percentmeans=nanmean(all_yproj2max_percent(tt>=tstart&tt<tstop,:));
+yproj2max_percentsem=nanstd(yproj2max_percentmeans)/sqrt(size(yproj2max_percentmeans,2));
+
+    %Control(ControlCombined.m ControlAll.mat
+yproj2max_percentmeansC=nanmean(all_yproj2max_percentC(tt>=tstart&tt<tstop,:));
+yproj2max_percentsemC=nanstd(yproj2max_percentmeansC)/sqrt(size(yproj2max_percentmeansC,2));
+
+%% figure;
+bar([nanmean(yproj2max_percentmeansC) nanmean(yproj2max_percentmeans) nanmean(yproj2max_percentmeansSM)])
+hold on
+errorbar([nanmean(yproj2max_percentmeansC) nanmean(yproj2max_percentmeans) nanmean(yproj2max_percentmeansSM)],[yproj2max_percentsemC yproj2max_percentsem yproj2max_percentsemSM], 'k.')
+
+scatter(ones(1,length(yproj2max_percentmeansC)),yproj2max_percentmeansC,'k.')
+scatter(ones(1,length(yproj2max_percentmeans)).*2,yproj2max_percentmeans,'k.')
+scatter(ones(1,length(yproj2max_percentmeansSM)).*3,yproj2max_percentmeansSM,'k.')
